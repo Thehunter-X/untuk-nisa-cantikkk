@@ -2,30 +2,352 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rose</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Rose 🌹</title>
+
+  <!-- Preconnect for faster font load -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Favicon as emoji SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌹</text></svg>">
+
+  <style>
+    /* ===== LOADING SCREEN ===== */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #fadede;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-rose {
+      font-size: 56px;
+      animation: loaderBounce 1s ease-in-out infinite;
+    }
+
+    .loader-text {
+      font-family: 'Sacramento', cursive;
+      font-size: 28px;
+      color: #FE7696;
+      margin-top: 12px;
+      opacity: 0;
+      animation: loaderFadeIn 0.8s ease 0.3s forwards;
+    }
+
+    .loader-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .loader-dots span {
+      width: 8px;
+      height: 8px;
+      background: #fe7696;
+      border-radius: 50%;
+      animation: dotPulse 1.2s ease-in-out infinite;
+    }
+
+    .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes loaderBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    @keyframes loaderFadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.4); opacity: 1; }
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: #fadede;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: sans-serif;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    #main-content {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    #main-content.visible {
+      opacity: 1;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 860px;
+      padding: 20px;
+      flex-wrap: nowrap;
+    }
+
+    /* ===== TEXT ===== */
+    .letter {
+      flex: 1;
+      min-width: 0;
+    }
+
+    h1 {
+      font-family: 'Sacramento', cursive;
+      color: #FE7696;
+      font-size: clamp(28px, 6vw, 64px);
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    /* ===== ROSE ===== */
+    .rose {
+      flex-shrink: 0;
+      width: clamp(100px, 20vw, 200px);
+      height: clamp(180px, 30vw, 300px);
+      position: relative;
+      animation: yidon 5s ease-in-out infinite;
+      transform: translateY(0);
+    }
+
+    .flower {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto;
+    }
+
+    .petal {
+      width: clamp(30px, 5vw, 50px);
+      height: clamp(30px, 5vw, 50px);
+      background: #fe7696;
+      border-radius: 0px 50%;
+      position: absolute;
+      box-shadow: 0 0 10px #D1123F;
+      z-index: 2;
+      transform-origin: bottom right;
+      animation: zhankai2 10s infinite;
+    }
+
+    .petal:nth-child(2) {
+      transform-origin: right bottom;
+      transform: rotate(90deg);
+      background: #fe7696;
+      left: -10px;
+      animation: zhankai1 10s infinite;
+    }
+
+    .petal:nth-child(3) {
+      width: clamp(24px, 4vw, 40px);
+      height: clamp(24px, 4vw, 40px);
+      left: 10px;
+      top: -20px;
+      z-index: 1;
+      background: #f03a64;
+      transform-origin: bottom right;
+      animation: zhankai2 10s infinite;
+    }
+
+    .petal:nth-child(4) {
+      transform: rotate(90deg);
+      width: clamp(24px, 4vw, 40px);
+      height: clamp(24px, 4vw, 40px);
+      left: 0px;
+      top: -20px;
+      z-index: 1;
+      background: #f03a64;
+      transform-origin: bottom right;
+      animation: zhankai1 10s infinite;
+    }
+
+    .petal:nth-child(5) {
+      width: clamp(30px, 5vw, 50px);
+      height: clamp(30px, 5vw, 50px);
+      border-radius: 20px;
+      left: 20px;
+      top: -30px;
+      z-index: 0;
+      background: #d1123f;
+    }
+
+    .leaf {
+      position: absolute;
+      top: clamp(80px, 15vw, 120px);
+      left: clamp(-80px, -12vw, -115px);
+    }
+
+    .stem {
+      width: clamp(160px, 25vw, 240px);
+      height: 40px;
+      background: transparent;
+      border: 8px solid #8ac78a;
+      border-color: #77a377 transparent transparent transparent;
+      border-radius: 50% 50%;
+      transform: rotate(100deg);
+    }
+
+    .leafs {
+      width: clamp(35px, 5vw, 50px);
+      height: clamp(28px, 4vw, 40px);
+      border-radius: 0px 50%;
+      background: #77a377;
+      position: absolute;
+      top: 0;
+      left: clamp(70px, 12vw, 100px);
+      z-index: 49;
+    }
+
+    .leafs:nth-child(2) {
+      width: clamp(28px, 4vw, 40px);
+      height: clamp(14px, 2vw, 20px);
+      top: 40px;
+      left: clamp(100px, 16vw, 140px);
+      transform: rotate(120deg);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes yidon {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes zhankai1 {
+      50%  { transform: rotate(110deg); }
+      100% { transform: rotate(90deg); }
+    }
+
+    @keyframes zhankai2 {
+      50%  { transform: rotate(-20deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* ===== MOBILE (iPhone XR = 414px, XS = 375px) ===== */
+    @media (max-width: 500px) {
+      body {
+        padding: 24px 16px;
+        align-items: center;
+      }
+
+      .container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+        padding: 10px;
+      }
+
+      .rose {
+        width: 120px;
+        height: 200px;
+        order: -1; /* rose appears on top on mobile */
+      }
+
+      .leaf {
+        top: 80px;
+        left: -80px;
+      }
+
+      .stem {
+        width: 160px;
+      }
+
+      .leafs { left: 72px; }
+      .leafs:nth-child(2) { left: 102px; }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="letter">
-      <h1>Your smile is as beautiful as rose, I hope you can always smile. (✿◡w◡)</h1>
+
+  <!-- LOADING SCREEN -->
+  <div id="loader">
+    <div class="loader-rose">🌹</div>
+    <div class="loader-text">Loading...</div>
+    <div class="loader-dots">
+      <span></span><span></span><span></span>
     </div>
-    <div class="rose">
-      <div class="flower">
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="petal"></div>
-        <div class="petal"></div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="main-content">
+    <div class="container">
+      <div class="letter">
+        <h1>Your smile is as beautiful as rose, I hope you can always smile. (✿◡w◡)</h1>
       </div>
-      <div class="leaf">
-        <div class="stem"></div>
-        <div class="leafs"></div>
-        <div class="leafs"></div>
+      <div class="rose">
+        <div class="flower">
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+        </div>
+        <div class="leaf">
+          <div class="stem"></div>
+          <div class="leafs"></div>
+          <div class="leafs"></div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Google Font (load async for performance) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap"></noscript>
+
+  <script>
+    // Show content only after fonts + page fully loaded
+    function revealPage() {
+      const loader = document.getElementById('loader');
+      const content = document.getElementById('main-content');
+      loader.classList.add('hidden');
+      content.classList.add('visible');
+    }
+
+    // Wait for fonts if available, else fallback after 2s
+    if (document.fonts && document.fonts.ready) {
+      Promise.race([
+        document.fonts.ready,
+        new Promise(res => setTimeout(res, 2000))
+      ]).then(revealPage);
+    } else {
+      window.addEventListener('load', revealPage);
+    }
+  </script>
 </body>
 </html>
